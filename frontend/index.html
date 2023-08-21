@@ -8,12 +8,16 @@
     <h1>Chat em Tempo Real</h1>
     <div>
         <input type="text" id="channelInput" placeholder="Digite o nome do canal">
-        <button onclick="connectToChannel()">Entrar no Canal</button>
+        <button onclick="conectarAoCanal()">Entrar no Canal</button>
     </div>
     <div id="chatArea" style="display: none;">
         <div id="messageBox"></div>
         <input type="text" id="messageInput" placeholder="Digite uma mensagem">
-        <button onclick="sendMessage()">Enviar</button>
+        <button onclick="enviarMensagem()">Enviar</button>
+    </div>
+    <div id="latencyTestArea" style="display: none;">
+        <button onclick="executarTesteDeLatencia()">Testar Latência</button>
+        <p id="latencyResult"></p>
     </div>
 </body>
 </html>
