@@ -1,23 +1,30 @@
-const socket = new WebSocket("ws://localhost:8080/ws?channel=mychannel");
+let socket;
+let currentChannel;
 
-socket.addEventListener("open", (event) => {
-  console.log("Conexão WebSocket aberta.");
-});
+function connectToChannel() {
+    const channelInput = document.getElementById("channelInput");
+    currentChannel = channelInput.value;
+    socket = new WebSocket(`ws://localhost:8080/ws?canal=${currentChannel}`);
 
-socket.addEventListener("message", (event) => {
-  const chatBox = document.getElementById("chatBox");
-  const message = document.createElement("div");
-  message.textContent = event.data;
-  chatBox.appendChild(message);
-});
+    socket.onopen = function(event) {
+        console.log(`Conectado ao canal: ${currentChannel}`);
+        document.getElementById("chatArea").style.display = "block";
+    };
 
-socket.addEventListener("close", (event) => {
-  console.log("Conexão WebSocket fechada.");
-});
+    socket.onmessage = function(event) {
+        const message = event.data;
+        const messageBox = document.getElementById("messageBox");
+        messageBox.innerHTML += `<p>${message}</p>`;
+    };
 
-document.getElementById("sendButton").addEventListener("click", () => {
-  const messageInput = document.getElementById("message");
-  const message = messageInput.value;
-  socket.send(message);
-  messageInput.value = "";
-});
+    socket.onclose = function(event) {
+        console.log(`Desconectado do canal: ${currentChannel}`);
+    };
+}
+
+function sendMessage() {
+    const messageInput = document.getElementById("messageInput");
+    const message = messageInput.value;
+    socket.send(message);
+    messageInput.value = "";
+}

@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>WebSocket Chat</title>
+    <title>Chat em Tempo Real</title>
+    <script src="script.js"></script>
 </head>
 <body>
-  <div id="chatBox"></div>
-  <input type="text" id="message" placeholder="Digite sua mensagem">
-  <button id="sendButton">Enviar</button>
-
-  <script src="script.js"></script>
+    <h1>Chat em Tempo Real</h1>
+    <div>
+        <input type="text" id="channelInput" placeholder="Digite o nome do canal">
+        <button onclick="connectToChannel()">Entrar no Canal</button>
+    </div>
+    <div id="chatArea" style="display: none;">
+        <div id="messageBox"></div>
+        <input type="text" id="messageInput" placeholder="Digite uma mensagem">
+        <button onclick="sendMessage()">Enviar</button>
+    </div>
 </body>
 </html>

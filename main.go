@@ -17,17 +17,17 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
+type cliente struct {
+	conexao *websocket.Conn
+	canal   chan []byte
+}
+
 type canalChat struct {
 	nome        string
 	clientes    map[*cliente]bool
 	transmissao chan []byte
 	recente     []string
 	mutex       sync.Mutex
-}
-
-type cliente struct {
-	conexao *websocket.Conn
-	canal   chan []byte
 }
 
 var canais = make(map[string]*canalChat)
@@ -83,6 +83,10 @@ func main() {
 				}
 			}
 		}()
+	})
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "index.html") // Serve a página HTML do frontend
 	})
 
 	go func() {
